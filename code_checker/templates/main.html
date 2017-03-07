@@ -2,6 +2,14 @@
 <!doctype html>
 <html>
 <head>
+
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <meta charset="utf-8">
 <title>3D Skew Side Menu Demo</title>
 <style class="cp-pen-styles">
@@ -103,7 +111,7 @@ li:hover {
 #menu {
   display: block;
   position: fixed;
-  background: #2980b9;
+  background: #331E36;
   color: #eee;
   height: 100%;
   width: 320px;
@@ -169,10 +177,39 @@ li:hover {
 </style>
 </head>
 
-<body class="set3d">
+<body class="set3d" style="background: black;">
 <div id="menu">
   <ul>
-{{list|safe}}
+
+    <button class="btn btn-primary dropdown-toggle" type="button" style="width: 100%;text-align:left;"><a style="color: white;" href="/home">HOME</a>
+    </button>
+
+      <div class="dropdown" style="padding-top: 20px;">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" style="width: 100%;text-align:left;">CONTEST
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu"  style="width:100%;float:left;">
+ {{list1|safe}}
+
+    </ul>
+  </div>
+      <div class="dropdown" style="padding-top: 10px;">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" style="width: 100%;text-align:left;">LAB
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+ {{list2|safe}}
+    </ul>
+  </div>
+<div class="dropdown" style="padding-top: 10px;">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" style="width: 100%;text-align:left;">PRACTICE
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+ {{list3|safe}}
+    </ul>
+  </div>
+<div style="padding-top: 20px;">
+<button class="btn btn-primary dropdown-toggle" type="button" style="width: 100%;text-align:left;">{{list4|safe}}
+    </button>
+  </div>
   </ul>
   <div id="trigger"></div>
 </div>
