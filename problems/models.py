@@ -12,17 +12,23 @@ def validate_len(value):
             _('Problem code length cannot be smaller than 4'),
             params={'value': value},
         )
+CHOICES = (
+        ('PRACTICE', 'PRACTICE'),
+        ('CONTEST', 'CONTEST'),
+        ('LAB', 'LAB'))
 
-class topics(models.Model):
+class group(models.Model):
 	title=models.CharField(max_length=120,null=False,blank=False)
 	modified= models.DateTimeField(auto_now=True,auto_now_add=False)
 	created= models.DateTimeField(auto_now=False,auto_now_add=True)
+	type=models.CharField(null=False,blank=False,max_length=100,choices=CHOICES,default='PRACTICE')
 	def __unicode__(self):
 		return self.title
 
 class problems(models.Model):
-	topic=models.ForeignKey(topics)
+	group=models.ForeignKey(group)
 	problem_code=models.CharField(max_length=6,null=False,blank=False,validators=[validate_len])
+	title=models.CharField(max_length=100,null=False,blank=False,default="title")
 	question=HTMLField()
 	constraints=HTMLField()
 	example=HTMLField()

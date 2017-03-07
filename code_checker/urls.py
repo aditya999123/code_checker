@@ -16,7 +16,17 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-
+from home.views import home,login_check,logout_user,scribble
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^$', home),
+    url(r'^home/', home),
+    url(r'^accounts/login/$', login_check),
+    url(r'^login/$', login_check),
+    url(r'^logout/$',logout_user ),
+    url(r'^scribble/$',scribble ),
 ]
+from django.conf import settings
+from django.conf.urls.static import static
+urlpatterns+=static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns+=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

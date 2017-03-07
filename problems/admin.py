@@ -4,12 +4,12 @@ from django.contrib import admin
 from .models import *
 
 
-class topics_Admin(admin.ModelAdmin):
-	list_display=['title','created','modified']
-admin.site.register(topics,topics_Admin)
+class group_Admin(admin.ModelAdmin):
+	list_display=['title','type','created','modified']
+admin.site.register(group,group_Admin)
 
 class problems_Admin(admin.ModelAdmin):
-	list_display=['topic','problem_code','created','modified']
+	list_display=['title','group','problem_code','created','modified']
 admin.site.register(problems,problems_Admin)
 
 class testcase_Admin(admin.ModelAdmin):

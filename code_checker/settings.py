@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'api',
     'problems',
+    'users',
+    'home',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -57,7 +59,7 @@ ROOT_URLCONF = 'code_checker.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['code_checker/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -116,8 +118,12 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.9/howto/static-files/
-
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+    '/var/www/static/',
+]
 STATIC_URL = '/static/'
+#STATIC_ROOT = 'static/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = "media/"
+#STATIC_ROOT = os.path.join(BASE_DIR, "static")
