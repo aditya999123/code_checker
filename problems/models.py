@@ -21,13 +21,14 @@ class group(models.Model):
 	title=models.CharField(max_length=120,null=False,blank=False)
 	modified= models.DateTimeField(auto_now=True,auto_now_add=False)
 	created= models.DateTimeField(auto_now=False,auto_now_add=True)
+	active=models.BooleanField(default=False)
 	type=models.CharField(null=False,blank=False,max_length=100,choices=CHOICES,default='PRACTICE')
 	def __unicode__(self):
 		return self.title
 
 class problems(models.Model):
 	group=models.ForeignKey(group)
-	problem_code=models.CharField(max_length=6,null=False,blank=False,validators=[validate_len])
+	problem_code=models.CharField(max_length=6,null=False,blank=False,validators=[validate_len],unique=True)
 	title=models.CharField(max_length=100,null=False,blank=False,default="title")
 	question=HTMLField()
 	constraints=HTMLField()

@@ -181,10 +181,12 @@ li:hover {
 <div id="menu">
   <ul>
 
-    <button class="btn btn-primary dropdown-toggle" type="button" style="width: 100%;text-align:left;"><a style="color: white;" href="/home">HOME</a>
+    <button class="btn btn-primary dropdown-toggle" type="button" style="width: 100%;text-align:left;" onclick="location.href='/home';">HOME
     </button>
-
-      <div class="dropdown" style="padding-top: 20px;">
+    <div style="padding-top: 10px;">
+    <button class="btn btn-primary dropdown-toggle" type="button" style="width: 100%;text-align:left;" onclick="location.href='/scribble';">SCRIBBLE
+    </button></div>
+      <div class="dropdown" style="padding-top: 30px;">
     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" style="width: 100%;text-align:left;">CONTEST
     <span class="caret"></span></button>
     <ul class="dropdown-menu"  style="width:100%;float:left;">
@@ -206,9 +208,8 @@ li:hover {
  {{list3|safe}}
     </ul>
   </div>
-<div style="padding-top: 20px;">
-<button class="btn btn-primary dropdown-toggle" type="button" style="width: 100%;text-align:left;">{{list4|safe}}
-    </button>
+<div style="padding-top: 30px;">
+{{list4|safe}}
   </div>
   </ul>
   <div id="trigger"></div>
