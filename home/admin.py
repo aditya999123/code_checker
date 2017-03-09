@@ -14,3 +14,7 @@ admin.site.register(KEYS_internal,KEYS_internal_Admin)
 class KEYS_external_Admin(admin.ModelAdmin):
 	list_display=['key','value','created','modified']
 admin.site.register(KEYS_external,KEYS_external_Admin)
+
+class user_dataAdmin(admin.ModelAdmin):
+	list_display=['username','type']
+admin.site.register(user_data,user_dataAdmin)

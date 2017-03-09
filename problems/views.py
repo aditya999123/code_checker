@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import *
 # Create your views here.
+from django.http import HttpResponseRedirect, HttpResponse
 from home.views import nav
 def group_problems(request,group_id):
 	
@@ -36,9 +37,19 @@ def problem(request,problem_code):
 	
 	return render(request,'problem.html',json_nav)
 
+def submit_api(problem_code):
+	pass
+
 def submit(request,problem_code):
 
-	json_nav=nav(request)	
-	problem_row=problems.objects.get(problem_code=problem_code)
-
-	return render(request,'',json_nav)
+	if(request.method=="GET"):
+		if(check_active(problem_code)==True):
+			return render(request,'submit.html')
+		else:
+			return render(request,'ended.html')
+	if(request.method=='POST'):
+		if(check_active(problem_code)==True):
+			submit_api(problem_code)
+			return HttpResponseRedirect('/group/')
+		else:
+			return render(request,'ended.html')
