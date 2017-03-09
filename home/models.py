@@ -33,3 +33,6 @@ class user_data(models.Model):
 
 	class Meta:
 		ordering = ('type',)
+
+	def __unicode__(self):
+		return self.username

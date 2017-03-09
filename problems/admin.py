@@ -21,5 +21,5 @@ class submission_Admin(admin.ModelAdmin):
 admin.site.register(submission,submission_Admin)
 
 class best_submission_Admin(admin.ModelAdmin):
-	list_display=['user','problem_code','time','memory','score','created','modified']
+	list_display=['submission_id','problem_code','user']
 admin.site.register(best_submission,best_submission_Admin)

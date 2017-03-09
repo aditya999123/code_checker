@@ -4,7 +4,7 @@ from django.db import models
 from tinymce.models import HTMLField
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
-
+from home.models import user_data
 # Create your models here.
 def validate_len(value):
     if len(value)<4:
@@ -53,9 +53,6 @@ class testcase(models.Model):
 	class Meta:
 		ordering = ('problem_code','score')
 
-	def __unicode__(self):
-		return str(self.problem_code)
-
 class submission(models.Model):
 	problem_code=models.ForeignKey(problems)
 	user=models.CharField(max_length=120,null=False,blank=False)
@@ -66,15 +63,10 @@ class submission(models.Model):
 	modified= models.DateTimeField(auto_now=True,auto_now_add=False)
 	created= models.DateTimeField(auto_now=False,auto_now_add=True)
 
+	def __unicode__(self):
+		return self.id
+
 class best_submission(models.Model):
 	problem_code=models.ForeignKey(problems)
-	user=models.CharField(max_length=120,null=False,blank=False)
-	code=models.TextField(max_length=12000,null=True,blank=True)
-	time=models.DecimalField(max_digits=8, decimal_places=6)
-	memory=models.DecimalField(max_digits=6, decimal_places=1)
-	score=models.IntegerField(null=False,blank=False,default=0)
-	modified= models.DateTimeField(auto_now=True,auto_now_add=False)
-	created= models.DateTimeField(auto_now=False,auto_now_add=True)
-
-	class Meta:
-		ordering = ('modified',)
+	submission_id=models.ForeignKey(submission)
+	user=models.ForeignKey(user_data)

@@ -40,19 +40,25 @@ def problem(request,problem_code):
 def submit_api(problem_code):
 	pass 
 
-def submit(request,problem_code):
+def check_active(problem_code):
+	group_row=problems.objects.get(problem_code=problem_code).group
+	if(group_row=='CONTEST'):
+		return group_row.active
+	else:
+		return True
 
+def submit(request,problem_code):
 	if(request.method=="GET"):
 		if(check_active(problem_code)==True):
 			return render(request,'submit.html')
 		else:
-			return render(request,'ended.html')
+			return render(request,'error.html',{'error':'contest has ended'})
 	if(request.method=='POST'):
 		if(check_active(problem_code)==True):
 			submit_api(problem_code)
 			return HttpResponseRedirect('/group/')
 		else:
-			return render(request,'ended.html')
+			return render(request,'error.html',{'error':'contest has ended'})
 
 def test(request):
 	return render(request,'a.html')
