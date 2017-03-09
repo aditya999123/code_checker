@@ -12,16 +12,16 @@ def nav(request):
 
 	for o in group.objects.filter(type='CONTEST',active=True):
 		if(problems.objects.filter(group=o).count()>0):
-			list1+='<li><a href="/group?group_id='+str(o.id)+'">'+o.title+'</a></li>'
+			list1+='<li><a href="/group/'+str(o.id)+'">'+o.title+'</a></li>'
 	
 	for o in group.objects.filter(type='LAB',active=True):
 		if(problems.objects.filter(group=o).count()>0):
-			list2+='<li><a href="/group?group_id='+str(o.id)+'">'+o.title+'</a></li>'
+			list2+='<li><a href="/group/'+str(o.id)+'">'+o.title+'</a></li>'
 
 	
 	for o in group.objects.filter(type='PRACTICE',active=True):
 		if(problems.objects.filter(group=o).count()>0):
-			list3+='<li><a href="/group?group_id='+str(o.id)+'">'+o.title+'</a></li>'
+			list3+='<li><a href="/group/'+str(o.id)+'">'+o.title+'</a></li>'
 
 	if request.user.is_authenticated():
 		list4+="""    <button class="btn btn-primary dropdown-toggle" type="button" style="width: 100%;text-align:left;" onclick="location.href='/logout';">LOGOUT
