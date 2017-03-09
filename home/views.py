@@ -52,12 +52,5 @@ def logout_user(request):
     return HttpResponseRedirect('/')
     
 def scribble(request):
-	return render(request,'scribble.html')
-def test(request):
-	return render(request,'dummy.html')
-
-def quest(request):
-	return render(request,'content.html')
-
-def sectfun(request):
-	return render(request,'section.html')
+	json_nav=nav(request)
+	return render(request,'scribble.html',json_nav)
