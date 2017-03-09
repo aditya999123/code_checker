@@ -1,0 +1,47 @@
+
+<!doctype html>
+<html>
+<head>
+
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<meta charset="utf-8">
+<title>CSE</title>
+      {% include "base_head.html" %}
+      <br><br> <br><br> <br><br>
+      <div class="container" style="width:60%;">
+  <h2 style="color:white;">ACE</h2>
+              
+  <table class="table table-condensed" style="color:white;">
+    <thead>
+      <tr>
+        <th style="text-align:center;"><b>Title</b></th>
+        <th style="text-align:center;">Code</b></th>
+         <th style="text-align:center;">Submissions</b></th>
+      </tr>
+    </thead>
+    <tbody>
+{{problem_rows|safe}}
+
+    </tbody>
+  </table>
+</div>
+
+  
+  
+</div>
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script> 
+<script>
+ $("#menu").hover(function () {
+    $('body').toggleClass("active");
+ });
+</script>
+
+
+</body>
+</html>

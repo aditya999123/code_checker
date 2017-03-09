@@ -16,7 +16,8 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from home.views import home,login_check,logout_user,scribble
+from home.views import home,login_check,logout_user,scribble,test,quest,sectfun
+from problems.views import group_problems
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', home),
@@ -25,6 +26,10 @@ urlpatterns = [
     url(r'^login/$', login_check),
     url(r'^logout/$',logout_user ),
     url(r'^scribble/$',scribble ),
+    url(r'^test/$',test ),
+    url(r'^quest/$',quest ),
+     url(r'^sect/$',sectfun ),
+     url(r'^group/$',group_problems ),
 ]
 from django.conf import settings
 from django.conf.urls.static import static

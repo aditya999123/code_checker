@@ -51,3 +51,22 @@ class testcase(models.Model):
 
 	def __unicode__(self):
 		return str(self.problem_code)
+
+class submission(models.Model):
+	problem_code=models.ForeignKey(problems)
+	user=models.CharField(max_length=120,null=False,blank=False)
+	code=models.TextField(max_length=12000,null=True,blank=True)
+	score=models.IntegerField(null=False,blank=False,default=0)
+	time=models.DecimalField(max_digits=8, decimal_places=6)
+	memory=models.DecimalField(max_digits=6, decimal_places=1)
+	modified= models.DateTimeField(auto_now=True,auto_now_add=False)
+	created= models.DateTimeField(auto_now=False,auto_now_add=True)
+class best_submission(models.Model):
+	problem_code=models.ForeignKey(problems)
+	user=models.CharField(max_length=120,null=False,blank=False)
+	code=models.TextField(max_length=12000,null=True,blank=True)
+	time=models.DecimalField(max_digits=8, decimal_places=6)
+	memory=models.DecimalField(max_digits=6, decimal_places=1)
+	score=models.IntegerField(null=False,blank=False,default=0)
+	modified= models.DateTimeField(auto_now=True,auto_now_add=False)
+	created= models.DateTimeField(auto_now=False,auto_now_add=True)
