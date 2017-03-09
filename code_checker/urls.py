@@ -17,7 +17,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from home.views import home,login_check,logout_user,scribble
-from problems.views import group_problems,problem
+from problems.views import group_problems,problem,submit
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', home),
@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'^scribble/$',scribble ),
     url(r'^group/(?P<group_id>\w+)/$',group_problems ),
     url(r'^problem/(?P<problem_code>\w+)/$',problem ),
+    url(r'^submit/(?P<problem_code>\w+)/$',submit ),
 ]
 from django.conf import settings
 from django.conf.urls.static import static

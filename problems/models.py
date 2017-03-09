@@ -35,6 +35,10 @@ class problems(models.Model):
 	example=HTMLField()
 	modified= models.DateTimeField(auto_now=True,auto_now_add=False)
 	created= models.DateTimeField(auto_now=False,auto_now_add=True)
+
+	class Meta:
+		ordering = ('group','modified')
+
 	def __unicode__(self):
 		return self.problem_code
 
@@ -61,6 +65,7 @@ class submission(models.Model):
 	memory=models.DecimalField(max_digits=6, decimal_places=1)
 	modified= models.DateTimeField(auto_now=True,auto_now_add=False)
 	created= models.DateTimeField(auto_now=False,auto_now_add=True)
+
 class best_submission(models.Model):
 	problem_code=models.ForeignKey(problems)
 	user=models.CharField(max_length=120,null=False,blank=False)
@@ -70,3 +75,6 @@ class best_submission(models.Model):
 	score=models.IntegerField(null=False,blank=False,default=0)
 	modified= models.DateTimeField(auto_now=True,auto_now_add=False)
 	created= models.DateTimeField(auto_now=False,auto_now_add=True)
+
+	class Meta:
+		ordering = ('modified',)

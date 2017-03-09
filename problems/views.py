@@ -30,3 +30,6 @@ def problem(request,problem_code):
 	'example':problem_row.example,
 	}
 	return render(request,'problem.html',problem_json)
+
+def submit(request,problem_code):
+	problem_row=problems.objects.get(problem_code=problem_code)
