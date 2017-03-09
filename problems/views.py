@@ -38,7 +38,7 @@ def problem(request,problem_code):
 	return render(request,'problem.html',json_nav)
 
 def submit_api(problem_code):
-	pass
+	pass 
 
 def submit(request,problem_code):
 
@@ -53,3 +53,6 @@ def submit(request,problem_code):
 			return HttpResponseRedirect('/group/')
 		else:
 			return render(request,'ended.html')
+
+def test(request):
+	return render(request,'a.html')

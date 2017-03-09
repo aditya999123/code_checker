@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<meta charset="utf-8">
+<title>CSE</title>
+      {% include "base_head.html" %}
+  
+  <br><br><br><br><br><br>
+<div class="container" style="color:white;">
+  <h2>Table</h2>
+  <br>
+  <p></p>            
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th style="background: linear-gradient(black, white);">Firstname</th>
+        <th  style="background: linear-gradient(black, white);">Lastname</th>
+        <th  style="background: linear-gradient(black, white);">Email</th>
+         <th  style="background: linear-gradient(black, white);">pagal</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>John</td>
+        <td>Doe</td>
+        <td>john@example.com</td>
+        <td>y</td>
+      </tr>
+      <tr>
+        <td>Mary</td>
+        <td>Moe</td>
+        <td>mary@example.com</td>
+         <td>y</td>
+      </tr>
+      <tr>
+        <td>July</td>
+        <td>Dooley</td>
+        <td>july@example.com</td>
+         <td>y</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script> 
+<script>
+ $("#menu").hover(function () {
+    $('body').toggleClass("active");
+ });
+</script>
+
+
+</body>
+</html>

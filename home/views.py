@@ -3,7 +3,8 @@ from django.contrib.auth.views import login,logout
 from django.http import HttpResponseRedirect, HttpResponse
 from problems.models import group,problems
 # Create your views here.
-
+from .models import *
+from django.contrib.auth.models import User
 def nav(request):
 	list1=""
 	list2=""
@@ -54,3 +55,26 @@ def logout_user(request):
 def scribble(request):
 	json_nav=nav(request)
 	return render(request,'scribble.html',json_nav)
+
+def register(request):
+	if(request.method=='GET'):
+		return render(request,'registration/register.html')
+	else:
+		roll=request.POST.get('roll')
+		password=request.POST.get('password')
+		password2=request.POST.get('password2')
+		if(len(roll)<8 or len(password)<6):
+			return render(request,'registration/register.html',{'error':"some error occured"})
+		try:
+			user=user_data.objects.get(username=roll)
+			return render(request,'registration/register.html',{'error':"user already exsists"})
+		except Exception,e:
+			print e
+			if(password==password2):
+				print roll,password
+				user=User.objects.create_user(username=roll,password=password)
+				print"y"
+				user_data.objects.create(username=roll,type='USER')
+				return HttpResponseRedirect('/login')
+			else:
+				return render(request,'registration/register.html',{'error':"password did not match"})

@@ -16,14 +16,15 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from home.views import home,login_check,logout_user,scribble
-from problems.views import group_problems,problem,submit
+from home.views import home,login_check,logout_user,scribble,register
+from problems.views import group_problems,problem,submit,test
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', home),
     url(r'^home/', home),
     url(r'^accounts/login/$', login_check),
     url(r'^login/$', login_check),
+    url(r'^register/$', register),
     url(r'^logout/$',logout_user ),
     url(r'^scribble/$',scribble ),
     url(r'^group/(?P<group_id>\w+)/$',group_problems ),
