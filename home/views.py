@@ -28,8 +28,13 @@ def nav(request):
 		list4+="""    <button class="btn btn-primary dropdown-toggle" type="button" style="width: 100%;text-align:left;" onclick="location.href='/logout';">LOGOUT
   				</button>"""
 	else:
-		list4+="""    <button class="btn btn-primary dropdown-toggle" type="button" style="width: 100%;text-align:left;" onclick="location.href='/login';">LOGIN
-  				</button>"""
+		list4+="""  				<button class="btn btn-primary dropdown-toggle" type="button" style="width: 100%;text-align:left;" onclick="location.href='/register';">REGISTER
+  				</button>    
+<div style="padding-top: 10px;">
+
+<button class="btn btn-primary dropdown-toggle" type="button" style="width: 100%;text-align:left;" onclick="location.href='/login';">LOGIN
+  				</button>
+  				</div>"""
   	return {'list1':list1,'list2':list2,'list3':list3,'list4':list4}
 
 def home(request):
