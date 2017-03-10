@@ -22,7 +22,7 @@ admin.site.register(testcase_submission,testcase_submission_Admin)
 
 
 class submission_Admin(admin.ModelAdmin):
-	list_display=['user','problem_code','time','memory','score','created','modified']
+	list_display=['id','user','problem_code','time','memory','score','created','modified']
 admin.site.register(submission,submission_Admin)
 
 class best_submission_Admin(admin.ModelAdmin):

@@ -13,29 +13,29 @@
 <meta charset="utf-8">
 <title>CSE</title>
       {% include "base_head.html" %}
-      <br><br> <BR>
+      <br>
+
 <div class="container-fluid" style="background:#f6f6f6;height:100%;width:100%;">
-  <div class="container-fluid" style="position:absolute;top:15%;width:95%;">
+  <div class="container-fluid" style="position:relative;top:7%;width:70%;">
   
   <div class="jumbotron">
-    <div style="color:black;font-size: 25px">Question<br></div>
+    <div style="color:black;font-size: 22px">Question Code : {{problem_code|safe}}</div>
        
    </div>
    <div class="panel-group">
-  <div class="panel panel-default" style="background:red;">
-    <div class="panel-body" >
-    <div class="container"><div class="row"><div class="col-sm-4">hdAYSGDUGASYDGsDUJSDVUASVJD</div><div class="col-sm-4">sdhjfdbjvbjdvbjh</div><div class="col-sm-4">hsjsdjsbjcbsdcbdsbcj</div></div></div></div>
+   <div style="font-size: 17px">
+  <div class="panel panel-default">
+    <div class="panel-body" style="text-align: center;">
+    <div class="col-sm-4">TestCase</div><div class="col-sm-4">Status</div><div class="col-sm-4">Score</div>
+    </div>
   </div>
-    <div class="panel panel-default" style="background:green;">
-    <div class="panel-body" >
-    <div class="container"><div class="row"><div class="col-sm-4">hdAYSGDUGASYDGsDUJSDVUASVJD</div><div class="col-sm-4">sdhjfdbjvbjdvbjh</div><div class="col-sm-4">hsjsdjsbjcbsdcbdsbcj</div></div></div></div>
-  </div>
-    <div class="panel panel-default" style="background:red;">
-    <div class="panel-body" >
-    <div class="container"><div class="row"><div class="col-sm-4">hdAYSGDUGASYDGsDUJSDVUASVJD</div><div class="col-sm-4">sdhjfdbjvbjdvbjh</div><div class="col-sm-4">hsjsdjsbjcbsdcbdsbcj</div></div></div></div>
+  {{table|safe}}
   </div>
   <br>
-  <button type="button" class="btn btn-success" style="float:right;">submit</button>
+ <!--  <div class="jumbotron"> -->
+    <div style="color:black;font-size: 16px"><pre>{{code|safe}}</pre></div>
+       <!-- 
+   </div> -->
 </div>
    
  </div>
@@ -51,6 +51,6 @@
  });
 </script>
 
-
+</div>
 </body>
 </html>

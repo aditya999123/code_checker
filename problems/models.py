@@ -28,6 +28,7 @@ class group(models.Model):
 	modified= models.DateTimeField(auto_now=True,auto_now_add=False)
 	created= models.DateTimeField(auto_now=False,auto_now_add=True)
 	active=models.BooleanField(default=False)
+	open_submissions_to_all=models.BooleanField(default=False)
 	type=models.CharField(null=False,blank=False,max_length=100,choices=CHOICES,default='PRACTICE')
 	def __unicode__(self):
 		return self.title
@@ -76,7 +77,7 @@ class submission(models.Model):
 class best_submission(models.Model):
 	problem_code=models.ForeignKey(problems,null=True)
 	submission_id=models.ForeignKey(submission,null=True)
-	user=models.ForeignKey(user_data)
+	user=models.CharField(max_length=120,null=False,blank=False)
 
 class testcase_submission(models.Model):
 	submission_id=models.ForeignKey(submission,null=True)

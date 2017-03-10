@@ -6,6 +6,49 @@ from home.views import nav
 from home.models import *
 permitted_languages = ["C", "CPP", "CSHARP", "CLOJURE", "CSS", "HASKELL", "JAVA", "JAVASCRIPT", "OBJECTIVEC", "PERL", "PHP", "PYTHON", "R", "RUBY", "RUST", "SCALA"]
 
+
+
+def problem_submissions(request,problem_code):
+	pass
+
+def user_submissions(request,problem_code):
+	pass
+
+def show_testcases(request,submission_id):
+	submission_row=submission.objects.get(id=submission_id)
+	json_nav=nav(request)
+	flag=False
+	if(submission_row.user==str(request.user)):
+		flag=True
+	else:
+		if(submission_row.problem_code.group.open_submissions_to_all==True):
+			flag=True
+		else:
+			flag=False
+	if(flag==True):
+		red='#FF8160'
+		green='#0CCE6B'
+		testcase_row=""" <div class="panel panel-default" style="background:%s;text-align: center">
+		<div class="panel-body" >
+		<div class="col-sm-4">%s</div><div class="col-sm-4">%s</div><div class="col-sm-4">%s</div></div>
+		</div>"""
+		table=""
+		i=0
+		for o in testcase_submission.objects.filter(submission_id=submission_row):
+			i+=1
+			if(o.correct==True):
+				table+=testcase_row%(green,i,o.status,o.score)
+			else:
+				table+=testcase_row%(red,i,o.status,o.score)
+
+		json_nav['table']=table
+		json_nav['problem_code']=submission_row.problem_code
+		json_nav['code']=submission_row.code
+		return render(request,'section.html',json_nav)
+	if(flag==False):
+		json_nav['error']='Acess Denied'
+		return render(request,'error.html',json_nav)
+
 def group_problems(request,group_id):
 	
 	row="""<tr><td style="text-align:center;"><a href="/problem/%s">%s</a></td>
@@ -109,7 +152,7 @@ def submit_api(request,problem_code,code,lang):
 				testcase_row.score=0
 				testcase_row.save()
 		else:
-			testcase_row.status=response['compile_status']
+			testcase_row.status='CE'
 			testcase_row.correct=False
 			testcase_row.score=0
 			testcase_row.save()
