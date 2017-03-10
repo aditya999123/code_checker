@@ -126,7 +126,8 @@ def submit_api(request,problem_code,code,lang):
 		print"@126"
 		best_submission_old=best_submission_row.submission_id
 		print"@128"		
-		if(submission_row.score>best_submission_old):
+		if(submission_row.score>best_submission_old.score):
+			print"@130"
 			best_submission_row.submission_id=submission_row
 		if(submission_row.score==best_submission_old):
 			if(submission_row.time<best_submission_old.time):
@@ -136,7 +137,10 @@ def submit_api(request,problem_code,code,lang):
 					best_submission_row.submission_id=submission_row
 	if(created==True):
 		best_submission_row.submission_id=submission_row
-		best_submission_row.save()
+
+	best_submission_row.save()
+
+	return submission_row.id
 
 def check_active(problem_code):
 	print"@128............................."
