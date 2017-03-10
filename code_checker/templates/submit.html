@@ -29,6 +29,8 @@
             <div class="left col-md-12">
                 <div id="editor-topbar">
                     <div class="lang-choose">
+                    <form method="post" action="." id="submit_code" name="submit_code">
+                    {% csrf_token %}
                         <select class="form-control" name="lang" id="lang">
                             <option value="C">C (gcc 4.8.1)</option>
                             <option value="CPP" selected>C++ (g++ 4.8.1)</option>
@@ -47,6 +49,8 @@
                             <option value="RUST">Rust (rustc 1.4.0)</option>
                             <option value="SCALA">Scala (scalac 2.9.1)</option>
                         </select>
+                        <input type="hidden" name="source" id="source">
+</form>
                     </div>
                     <!-- END of lang-choose -->
                     <div id="settings">
@@ -82,7 +86,8 @@
                
                 <div class="pull-right run-save-panel">
                     <span id='copy_code'></span>
-                    <button class="btn btn-success" id="run-code" data-toggle="tooltip" data-placement="top" title="Press Ctrl+Enter">Submit</button>
+                    <button class="btn btn-success" id="run-code" data-toggle="tooltip" data-placement="top">Submit</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -142,7 +147,7 @@
     <!-- jQuery -->
     <script src="{% static 'hackIDE/js/jquery.min.js' %}" type="text/javascript" charset="utf-8"></script>
     <!-- Bootstrap (include all individual files below) -->
-    <script src="{% static 'hackIDE/js/custom.js' %}" type="text/javascript" charset="utf-8"></script>
+    <script src="{% static 'hackIDE/js/custom_submit.js' %}" type="text/javascript" charset="utf-8"></script>
     <script src="{% static 'hackIDE/js/FileSaver.min.js' %}" type="text/javascript" charset="utf-8"></script>
     <script src="{% static 'hackIDE/js/jszip.min.js' %}" type="text/javascript" charset="utf-8"></script>
     <script src="{% static 'hackIDE/js/bootstrap.min.js' %}" type="text/javascript" charset="utf-8"></script>

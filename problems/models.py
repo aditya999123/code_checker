@@ -12,6 +12,12 @@ def validate_len(value):
             _('Problem code length cannot be smaller than 4'),
             params={'value': value},
         )
+def validate_timelimit(value):
+    if value<0 or value>5:
+        raise ValidationError(
+            _('choose from 0 to 5'),
+            params={'value': value},
+        )
 CHOICES = (
         ('PRACTICE', 'PRACTICE'),
         ('CONTEST', 'CONTEST'),
@@ -27,7 +33,7 @@ class group(models.Model):
 		return self.title
 
 class problems(models.Model):
-	group=models.ForeignKey(group)
+	group=models.ForeignKey(group,null=True)
 	problem_code=models.CharField(max_length=6,null=False,blank=False,validators=[validate_len],unique=True)
 	title=models.CharField(max_length=100,null=False,blank=False,default="title")
 	question=HTMLField()
@@ -43,8 +49,9 @@ class problems(models.Model):
 		return self.problem_code
 
 class testcase(models.Model):
-	problem_code=models.ForeignKey(problems)
+	problem_code=models.ForeignKey(problems,null=True)
 	input=models.TextField(max_length=12000,null=True,blank=True)
+	time_limit=models.IntegerField(validators=[validate_timelimit],default=1)
 	expected_output=models.TextField(max_length=12000,null=True,blank=True)
 	score=models.IntegerField(null=False,blank=False,default=0)
 	modified= models.DateTimeField(auto_now=True,auto_now_add=False)
@@ -54,19 +61,25 @@ class testcase(models.Model):
 		ordering = ('problem_code','score')
 
 class submission(models.Model):
-	problem_code=models.ForeignKey(problems)
+	problem_code=models.ForeignKey(problems,null=True)
 	user=models.CharField(max_length=120,null=False,blank=False)
 	code=models.TextField(max_length=12000,null=True,blank=True)
 	score=models.IntegerField(null=False,blank=False,default=0)
-	time=models.DecimalField(max_digits=8, decimal_places=6)
-	memory=models.DecimalField(max_digits=6, decimal_places=1)
+	time=models.DecimalField(max_digits=8, decimal_places=6,default=0)
+	memory=models.DecimalField(max_digits=6, decimal_places=1,default=0)
 	modified= models.DateTimeField(auto_now=True,auto_now_add=False)
 	created= models.DateTimeField(auto_now=False,auto_now_add=True)
 
 	def __unicode__(self):
-		return self.id
+		return str(self.id)
 
 class best_submission(models.Model):
-	problem_code=models.ForeignKey(problems)
-	submission_id=models.ForeignKey(submission)
+	problem_code=models.ForeignKey(problems,null=True)
+	submission_id=models.ForeignKey(submission,null=True)
 	user=models.ForeignKey(user_data)
+
+class testcase_submission(models.Model):
+	submission_id=models.ForeignKey(submission,null=True)
+	correct=models.BooleanField(default=False)
+	status=models.CharField(max_length=10,null=True,blank=False)
+	score=models.IntegerField(default=0)

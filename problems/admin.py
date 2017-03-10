@@ -16,6 +16,11 @@ class testcase_Admin(admin.ModelAdmin):
 	list_display=['problem_code','score','created','modified']
 admin.site.register(testcase,testcase_Admin)
 
+class testcase_submission_Admin(admin.ModelAdmin):
+	list_display=['submission_id','correct','status','score']
+admin.site.register(testcase_submission,testcase_submission_Admin)
+
+
 class submission_Admin(admin.ModelAdmin):
 	list_display=['user','problem_code','time','memory','score','created','modified']
 admin.site.register(submission,submission_Admin)
