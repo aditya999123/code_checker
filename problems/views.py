@@ -34,15 +34,17 @@ def problem_submissions(request,problem_code):
 	<td style="text-align: center;"><a href="/problem/%s">%s</a></td>
 	<td style="text-align: center;">%s</td>
 	<td style="text-align: center;">%s</td>
+	<td style="text-align: center;">%s</td>
+	<td style="text-align: center;">%s</td>
 	<td style="text-align: center;"><button type="button" class="btn btn-success" onclick="window.location='/submission/%s'" %s>View</button>
 	</td></tr>"""
 	table=""
 	problem_row=problems.objects.get(problem_code=problem_code)
 	for o in submission.objects.filter(problem_code=problem_row).order_by('created').reverse():
 		if (check_access(request,o.id)==True):
-			table+=table_row%(o.problem_code,o.problem_code,str(o.created)[:19],o.score,o.id,'enabled')
+			table+=table_row%(o.problem_code,o.problem_code,str(o.created)[:19],o.time,o.memory,o.score,o.id,'enabled')
 		else:
-			table+=table_row%(o.problem_code,o.problem_code,str(o.created)[:19],o.score,o.id,'disabled')
+			table+=table_row%(o.problem_code,o.problem_code,str(o.created)[:19],o.time,o.memory,o.score,o.id,'disabled')
 	json_nav['table']=table
 
 	return render(request,'submissions.html',json_nav)
@@ -56,22 +58,24 @@ def user_submissions(request,username):
 	<td style="text-align: center;"><a href="/problem/%s">%s</a></td>
 	<td style="text-align: center;">%s</td>
 	<td style="text-align: center;">%s</td>
+	<td style="text-align: center;">%s</td>
+	<td style="text-align: center;">%s</td>
 	<td style="text-align: center;"><button type="button" class="btn btn-success" onclick="window.location='/submission/%s'" %s>View</button>
 	</td></tr>"""
 	table=""
 	if(problem_code==None):
 		for o in submission.objects.filter(user=str(request.user)).order_by('created').reverse():
 			if (check_access(request,o.id)==True):
-				table+=table_row%(o.problem_code,o.problem_code,str(o.created)[:19],o.score,o.id,'enabled')
+				table+=table_row%(o.problem_code,o.problem_code,str(o.created)[:19],o.time,o.memory,o.score,o.id,'enabled')
 			else:
-				table+=table_row%(o.problem_code,o.problem_code,str(o.created)[:19],o.score,o.id,'disabled')
+				table+=table_row%(o.problem_code,o.problem_code,str(o.created)[:19],o.time,o.memory,o.score,o.id,'disabled')
 	else:
 		problem_row=problems.objects.get(problem_code=problem_code)
 		for o in submission.objects.filter(user=str(request.user),problem_code=problem_row).order_by('created').reverse():
 			if (check_access(request,o.id)==True):
-				table+=table_row%(o.problem_code,o.problem_code,str(o.created)[:19],o.score,o.id,'enabled')
+				table+=table_row%(o.problem_code,o.problem_code,str(o.created)[:19],o.time,o.memory,o.score,o.id,'enabled')
 			else:
-				table+=table_row%(o.problem_code,o.problem_code,str(o.created)[:19],o.score,o.id,'disabled')
+				table+=table_row%(o.problem_code,o.problem_code,str(o.created)[:19],o.time,o.memory,o.score,o.id,'disabled')
 	json_nav['table']=table
 
 	return render(request,'submissions.html',json_nav)
