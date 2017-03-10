@@ -8,9 +8,6 @@ permitted_languages = ["C", "CPP", "CSHARP", "CLOJURE", "CSS", "HASKELL", "JAVA"
 
 
 
-def problem_submissions(request,problem_code):
-	pass
-
 def check_access(request,submission_id):
 	submission_row=submission.objects.get(id=int(submission_id))
 	
@@ -26,6 +23,28 @@ def check_access(request,submission_id):
 			flag=True
 	print "flag",flag
 	return flag
+
+def problem_submissions(request,problem_code):
+	json_nav=nav(request)
+	#problem_code= request.GET.get('problem_code')
+	print problem_code
+
+	table_row="""<tr>
+	<td style="text-align: center;"><a href="/problem/%s">%s</a></td>
+	<td style="text-align: center;">%s</td>
+	<td style="text-align: center;">%s</td>
+	<td style="text-align: center;"><button type="button" class="btn btn-success" onclick="window.location='/submission/%s'" %s>View</button>
+	</td></tr>"""
+	table=""
+	problem_row=problems.objects.get(problem_code=problem_code)
+	for o in submission.objects.filter(problem_code=problem_row).order_by('created').reverse():
+		if (check_access(request,o.id)==True):
+			table+=table_row%(o.problem_code,o.problem_code,str(o.created)[:19],o.score,o.id,'enabled')
+		else:
+			table+=table_row%(o.problem_code,o.problem_code,str(o.created)[:19],o.score,o.id,'disabled')
+	json_nav['table']=table
+
+	return render(request,'submissions.html',json_nav)
 
 
 def user_submissions(request,username):
