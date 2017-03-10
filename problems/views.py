@@ -59,6 +59,7 @@ def user_submissions(request,username):
 	<td style="text-align: center;"><a href="/problem/%s">%s</a></td>
 	<td style="text-align: center;">%s</td>
 	<td style="text-align: center;">%s</td>
+		<td style="text-align: center;">%s</td>
 	<td style="text-align: center;">%s</td>
 	<td style="text-align: center;">%s</td>
 	<td style="text-align: center;"><button type="button" class="btn btn-success" onclick="window.location='/submission/%s'" %s>View</button>
