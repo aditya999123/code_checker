@@ -11,12 +11,9 @@ permitted_languages = ["C", "CPP", "CSHARP", "CLOJURE", "CSS", "HASKELL", "JAVA"
 def problem_submissions(request,problem_code):
 	pass
 
-def user_submissions(request,username):
-	pass
-
-def show_testcases(request,submission_id):
-	submission_row=submission.objects.get(id=submission_id)
-	json_nav=nav(request)
+def check_access(request,submission_id):
+	submission_row=submission.objects.get(id=int(submission_id))
+	
 	flag=False
 	if(submission_row.user==str(request.user)):
 		flag=True
@@ -25,6 +22,45 @@ def show_testcases(request,submission_id):
 			flag=True
 		else:
 			flag=False
+		if(user_data.objects.get(username=str(request.user)).type=='ADMIN'):
+			flag=True
+	print "flag",flag
+	return flag
+
+
+def user_submissions(request,username):
+	json_nav=nav(request)
+	problem_code= request.GET.get('problem_code')
+
+	table_row="""<tr>
+	<td style="text-align: center;"><a href="/problem/%s">%s</a></td>
+	<td style="text-align: center;">%s</td>
+	<td style="text-align: center;">%s</td>
+	<td style="text-align: center;"><button type="button" class="btn btn-success" onclick="window.location='/submission/%s'" %s>View</button>
+	</td></tr>"""
+	table=""
+	if(problem_code==None):
+		for o in submission.objects.filter(user=str(request.user)).order_by('created').reverse():
+			if (check_access(request,o.id)==True):
+				table+=table_row%(o.problem_code,o.problem_code,str(o.created)[:19],o.score,o.id,'enabled')
+			else:
+				table+=table_row%(o.problem_code,o.problem_code,str(o.created)[:19],o.score,o.id,'disabled')
+	else:
+		problem_row=problems.objects.get(problem_code=problem_code)
+		for o in submission.objects.filter(user=str(request.user),problem_code=problem_row).order_by('created').reverse():
+			if (check_access(request,o.id)==True):
+				table+=table_row%(o.problem_code,o.problem_code,str(o.created)[:19],o.score,o.id,'enabled')
+			else:
+				table+=table_row%(o.problem_code,o.problem_code,str(o.created)[:19],o.score,o.id,'disabled')
+	json_nav['table']=table
+
+	return render(request,'submissions.html',json_nav)
+
+
+def show_testcases(request,submission_id):
+	flag=check_access(request,submission_id)
+	json_nav=nav(request)
+	submission_row=submission.objects.get(id=int(submission_id))
 	if(flag==True):
 		red='#FF8160'
 		green='#0CCE6B'
