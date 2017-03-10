@@ -67,7 +67,7 @@ def user_submissions(request,username):
 	if(problem_code==None):
 		for o in submission.objects.filter(user=str(request.user)).order_by('created').reverse():
 			if (check_access(request,o.id)==True):
-				table+=table_row%(o.problem_code,o.problem_codeo.user,,str(o.created)[:19],o.time,o.memory,o.score,o.id,'enabled')
+				table+=table_row%(o.problem_code,o.problem_code,o.user,str(o.created)[:19],o.time,o.memory,o.score,o.id,'enabled')
 			else:
 				table+=table_row%(o.problem_code,o.problem_code,o.user,str(o.created)[:19],o.time,o.memory,o.score,o.id,'disabled')
 	else:
