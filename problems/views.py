@@ -227,7 +227,7 @@ def submit_api(request,problem_code,code,lang):
 	submission_row.memory=memory
 	submission_row.save()
 	print"@122"
-	best_submission_row,created=best_submission.objects.get_or_create(user=user_data.objects.get(username=str(request.user)),problem_code=problem_row)
+	best_submission_row,created=best_submission.objects.get_or_create(user=str(request.user),problem_code=problem_row)
 	print"@124"
 	if(created==False):
 		print"@126"
