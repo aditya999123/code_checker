@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.views import login,logout
 from django.http import HttpResponseRedirect, HttpResponse
 from problems.models import group,problems
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 from .models import *
 from django.contrib.auth.models import User
@@ -25,8 +26,13 @@ def nav(request):
 			list3+='<li><a href="/group/'+str(o.id)+'">'+o.title+'</a></li>'
 
 	if request.user.is_authenticated():
-		list4+="""    <button class="btn btn-primary dropdown-toggle" type="button" style="width: 100%;text-align:left;" onclick="location.href='/logout';">LOGOUT
-  				</button>"""
+		list4+="""  <button class="btn btn-primary dropdown-toggle" type="button" style="width: 100%;text-align:left;" onclick="location.href='/user/"""+str(request.user)+"""/submissions';">MY SUBMISSIONS
+  				</button> 
+<div style="padding-top: 10px;">
+		 <button class="btn btn-primary dropdown-toggle" type="button" style="width: 100%;text-align:left;" onclick="location.href='/logout';">LOGOUT
+  				</button>
+  				</div>
+  				"""
 	else:
 		list4+="""  				<button class="btn btn-primary dropdown-toggle" type="button" style="width: 100%;text-align:left;" onclick="location.href='/register';">REGISTER
   				</button>    
@@ -52,11 +58,11 @@ def login_check(request):
         return HttpResponseRedirect('/home')
     else:
         return login(request)
-
+@login_required
 def logout_user(request):
     logout(request)
     return HttpResponseRedirect('/')
-    
+@login_required
 def scribble(request):
 	json_nav=nav(request)
 	return render(request,'scribble.html',json_nav)

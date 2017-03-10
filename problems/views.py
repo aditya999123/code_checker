@@ -1,13 +1,14 @@
 from django.shortcuts import render
 from .models import *
 # Create your views here.
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse
 from home.views import nav
 from home.models import *
 permitted_languages = ["C", "CPP", "CSHARP", "CLOJURE", "CSS", "HASKELL", "JAVA", "JAVASCRIPT", "OBJECTIVEC", "PERL", "PHP", "PYTHON", "R", "RUBY", "RUST", "SCALA"]
 
 
-
+@login_required
 def check_access(request,submission_id):
 	submission_row=submission.objects.get(id=int(submission_id))
 	
@@ -23,7 +24,7 @@ def check_access(request,submission_id):
 			flag=True
 	print "flag",flag
 	return flag
-
+@login_required
 def problem_submissions(request,problem_code):
 	json_nav=nav(request)
 	#problem_code= request.GET.get('problem_code')
@@ -46,7 +47,7 @@ def problem_submissions(request,problem_code):
 
 	return render(request,'submissions.html',json_nav)
 
-
+@login_required
 def user_submissions(request,username):
 	json_nav=nav(request)
 	problem_code= request.GET.get('problem_code')
@@ -75,7 +76,7 @@ def user_submissions(request,username):
 
 	return render(request,'submissions.html',json_nav)
 
-
+@login_required
 def show_testcases(request,submission_id):
 	flag=check_access(request,submission_id)
 	json_nav=nav(request)
@@ -103,7 +104,7 @@ def show_testcases(request,submission_id):
 	if(flag==False):
 		json_nav['error']='Acess Denied'
 		return render(request,'error.html',json_nav)
-
+@login_required
 def group_problems(request,group_id):
 	
 	row="""<tr><td style="text-align:center;"><a href="/problem/%s">%s</a></td>
@@ -124,7 +125,7 @@ def group_problems(request,group_id):
 	json_nav['problem_rows']=problem_rows
 	return render(request,'group_problems.html',json_nav)
 
-
+@login_required
 def problem(request,problem_code):
 	
 	problem_row=problems.objects.get(problem_code=problem_code)
@@ -139,6 +140,8 @@ def problem(request,problem_code):
 	return render(request,'problem.html',json_nav)
 import requests
 RUN_URL = "https://api.hackerearth.com/v3/code/run/"
+
+
 def runCode(problem_code,code,lang,input,time_limit):
 
 	run_data = {
@@ -159,11 +162,11 @@ def runCode(problem_code,code,lang,input,time_limit):
 	Make call to /run/ endpoint of HackerEarth API
 	and save code and result in database
 	"""
-	r = requests.post(RUN_URL, data=run_data)
+	r = requests.post(RUN_URL, data=run_data,verify=False)
 	r = r.json()
 	print r
 	return r 
-
+@login_required
 def submit_api(request,problem_code,code,lang):
 	
 	problem_row=problems.objects.get(problem_code=problem_code)
@@ -240,6 +243,7 @@ def submit_api(request,problem_code,code,lang):
 
 	return submission_row.id
 
+
 def check_active(problem_code):
 	print"@128............................."
 	group_row=problems.objects.get(problem_code=problem_code).group
@@ -248,7 +252,7 @@ def check_active(problem_code):
 		return group_row.active
 	else:
 		return True
-
+@login_required
 def submit(request,problem_code):
 	json_nav=nav(request)
 	if(request.method=="GET"):
@@ -282,6 +286,3 @@ def submit(request,problem_code):
 		else:
 			json_nav['error']='contest has ended'
 			return render(request,'error.html',json_nav)
-
-def test(request):
-	return render(request,'a.html')

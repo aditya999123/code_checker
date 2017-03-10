@@ -17,7 +17,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from home.views import home,login_check,logout_user,scribble,register
-from problems.views import group_problems,problem,submit,test,problem_submissions,user_submissions,show_testcases
+from problems.views import group_problems,problem,submit,problem_submissions,user_submissions,show_testcases
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', home),
