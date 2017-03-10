@@ -19,6 +19,12 @@
   
   <div class="jumbotron">
     <div style="color:black;font-size: 25px">{{title|safe}} {{problem_code|safe}} <br></div>
+  <div class="panel panel-info class" style="float: right">
+
+  <button type="button" class="btn btn-primary" onclick="window.location='/problem/{{problem_code|safe}}/submissions'">All Submissions</button>
+ <button type="button" class="btn btn-primary" onclick="window.location='/user/{{ user.get_username }}/submissions?problem_code={{problem_code|safe}}'">My Submissions</button>
+  
+  </div>
        
    </div>
    <div class="panel-group">

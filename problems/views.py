@@ -11,7 +11,7 @@ permitted_languages = ["C", "CPP", "CSHARP", "CLOJURE", "CSS", "HASKELL", "JAVA"
 def problem_submissions(request,problem_code):
 	pass
 
-def user_submissions(request,problem_code):
+def user_submissions(request,username):
 	pass
 
 def show_testcases(request,submission_id):
