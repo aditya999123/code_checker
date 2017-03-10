@@ -248,10 +248,9 @@ def check_active(problem_code):
 	print"@128............................."
 	group_row=problems.objects.get(problem_code=problem_code).group
 	print"@130............................."
-	if(group_row.title=='CONTEST'):
-		return group_row.active
-	else:
-		return True
+
+	return group_row.active
+
 @login_required
 def submit(request,problem_code):
 	json_nav=nav(request)

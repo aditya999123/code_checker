@@ -734,7 +734,7 @@ $(document).ready(function(){
 
 	// when run-code is clicked
 	$("#run-code").click(function(){
-		alert(editorContent)
+		//alert(editorContent)
 document.getElementById('source').value=editorContent;
 document.getElementById('source').text=editorContent;
 document.getElementById("submit_code").submit();
