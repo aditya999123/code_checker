@@ -37,7 +37,7 @@ def problem_submissions(request,problem_code):
 	<td style="text-align: center;">%s</td>
 	<td style="text-align: center;">%s</td>
 	<td style="text-align: center;">%s</td>
-	<td style="text-align: center;"><button type="button" class="btn btn-success" onclick="window.location='/submission/%s'" %s>View</button>
+	<td style="text-align: center;"><button type="button" class="btn btn-success" onclick="window.open('/submission/%s'") %s>View</button>
 	</td></tr>"""
 	table=""
 	problem_row=problems.objects.get(problem_code=problem_code)
@@ -62,7 +62,7 @@ def user_submissions(request,username):
 		<td style="text-align: center;">%s</td>
 	<td style="text-align: center;">%s</td>
 	<td style="text-align: center;">%s</td>
-	<td style="text-align: center;"><button type="button" class="btn btn-success" onclick="window.location='/submission/%s'" %s>View</button>
+	<td style="text-align: center;"><button type="button" class="btn btn-success" onclick="window.open('/submission/%s'") %s>View</button>
 	</td></tr>"""
 	table=""
 	if(problem_code==None):
@@ -110,25 +110,56 @@ def show_testcases(request,submission_id):
 	if(flag==False):
 		json_nav['error']='Acess Denied'
 		return render(request,'error.html',json_nav)
+
+@login_required
+def rankings(request,submission_id):
+	flag=check_access(request,submission_id)
+	json_nav=nav(request)
+	submission_row=submission.objects.get(id=int(submission_id))
+	if(flag==True):
+		red='#FF8160'
+		green='#0CCE6B'
+		testcase_row=""" <div class="panel panel-default" style="background:%s;text-align: center">
+		<div class="panel-body" >
+		<div class="col-sm-4">%s</div><div class="col-sm-4">%s</div><div class="col-sm-4">%s</div></div>
+		</div>"""
+		table=""
+		i=0
+		for o in testcase_submission.objects.filter(submission_id=submission_row):
+			i+=1
+			if(o.correct==True):
+				table+=testcase_row%(green,i,o.status,o.score)
+			else:
+				table+=testcase_row%(red,i,o.status,o.score)
+
+		json_nav['table']=table
+		json_nav['problem_code']=submission_row.problem_code
+		json_nav['code']=submission_row.code
+		return render(request,'section.html',json_nav)
+	if(flag==False):
+		json_nav['error']='Acess Denied'
+		return render(request,'error.html',json_nav)
+
 @login_required
 def group_problems(request,group_id):
 	
-	row="""<tr><td style="text-align:center;"><a href="/problem/%s">%s</a></td>
+	row="""<tr><td style="text-align:center;"><a href="/problem/%s" target="_blank">%s</a></td>
 	<td style="text-align:center;">%s</td>
 	<td style="text-align:center;">%s</td></tr>"""
 	problem_rows=''
-	for o in problems.objects.filter(group=group.objects.get(id=int(group_id))):
+	group_row=group.objects.get(id=int(group_id))
+	for o in problems.objects.filter(group=group_row):
 		count=0
 		try:
-
 			count=best_submission.objects.filter(problem_code=o).count()
-
 		except Exception,e:
 			print e
 		problem_rows+=row % (o.problem_code,o.title,o.problem_code,count)
 
 	json_nav=nav(request)
+	json_nav['group_id']=group_id
 	json_nav['problem_rows']=problem_rows
+	json_nav['group_title']=group_row.title
 	return render(request,'group_problems.html',json_nav)
 
 @login_required
