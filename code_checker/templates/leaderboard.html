@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<meta charset="utf-8">
+<title>CSE</title>
+      {% include "base_head.html" %}
+  
+  <br><br><br><br><br><br>
+<div class="container" style="color:white;">
+  <h2>{{group_title|safe}} : LeaderBoard </h2>
+  <br>
+  <p></p>            
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th style="text-align: center;">Rank</th>
+        <th style="text-align: center;">User</th>
+        <th style="text-align: center;">Score</th>
+      </tr>
+    </thead>
+    <tbody>
+{{table|safe}}
+    </tbody>
+  </table>
+</div>
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script> 
+<script>
+ $("#menu").hover(function () {
+    $('body').toggleClass("active");
+ });
+</script>
+
+
+</body>
+</html>

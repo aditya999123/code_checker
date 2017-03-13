@@ -112,33 +112,61 @@ def show_testcases(request,submission_id):
 		return render(request,'error.html',json_nav)
 
 @login_required
-def rankings(request,submission_id):
-	flag=check_access(request,submission_id)
+def rankings(request,group_id):
 	json_nav=nav(request)
-	submission_row=submission.objects.get(id=int(submission_id))
-	if(flag==True):
-		red='#FF8160'
-		green='#0CCE6B'
-		testcase_row=""" <div class="panel panel-default" style="background:%s;text-align: center">
-		<div class="panel-body" >
-		<div class="col-sm-4">%s</div><div class="col-sm-4">%s</div><div class="col-sm-4">%s</div></div>
-		</div>"""
-		table=""
-		i=0
-		for o in testcase_submission.objects.filter(submission_id=submission_row):
-			i+=1
-			if(o.correct==True):
-				table+=testcase_row%(green,i,o.status,o.score)
-			else:
-				table+=testcase_row%(red,i,o.status,o.score)
+	#problem_code= request.GET.get('problem_code')
+	#print problem_code
 
-		json_nav['table']=table
-		json_nav['problem_code']=submission_row.problem_code
-		json_nav['code']=submission_row.code
-		return render(request,'section.html',json_nav)
-	if(flag==False):
-		json_nav['error']='Acess Denied'
-		return render(request,'error.html',json_nav)
+	table_row="""<tr>
+	<td style="text-align: center;">%s</td>
+		<td style="text-align: center;">%s</td>
+	<td style="text-align: center;">%s</td>
+	</td></tr>"""
+	table=""
+	group_row=group.objects.get(id=int(group_id))
+	rank_array={}
+	for p in problems.objects.filter(group=group_row):
+		for bs in best_submission.objects.filter(problem_code=p):
+			submission_row=bs.submission_id
+			try:
+				rank_array[submission_row.user]['score']+=submission_row.score
+				rank_array[submission_row.user]['time']+=submission_row.time
+			except:
+				rank_array[submission_row.user]={'score':0,'time':0}
+				rank_array[submission_row.user]['score']+=submission_row.score
+				rank_array[submission_row.user]['time']+=submission_row.time
+
+	#print rank_array
+	rank_json_array=[]
+	for x in rank_array:
+		tmp_json={}
+		tmp_json['user']=x
+		tmp_json['score']=rank_array[x]['score']
+		tmp_json['time']=rank_array[x]['time']
+		rank_json_array.append(tmp_json)
+	print rank_json_array
+
+	rank_json_array_sorted=sorted(rank_json_array, key=lambda x: (x['score'],x['time']), reverse=True)
+
+	print rank_json_array_sorted
+	i=1
+	for j in range(0,len(rank_json_array_sorted)):
+		print rank_json_array_sorted[j]['user']
+		if(j==0):
+			table+=table_row  % (i,rank_json_array_sorted[j]['user'],rank_json_array_sorted[j]['score'])
+		else :
+			if(rank_json_array_sorted[j]['score']==rank_json_array_sorted[j-1]['score']):
+				if(rank_json_array_sorted[j]['time']==rank_json_array_sorted[j-1]['time']):
+					pass
+				else:
+					i=i+1
+			else:
+				i=i+1
+			table+=table_row  % (i,rank_json_array_sorted[j]['user'],rank_json_array_sorted[j]['score'])
+	
+	json_nav['table']=table
+	json_nav['group_title']=group_row.title
+	return render(request,'leaderboard.html',json_nav)
 
 @login_required
 def group_problems(request,group_id):

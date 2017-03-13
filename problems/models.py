@@ -66,7 +66,7 @@ class submission(models.Model):
 	user=models.CharField(max_length=120,null=False,blank=False)
 	code=models.TextField(max_length=12000,null=True,blank=True)
 	score=models.IntegerField(null=False,blank=False,default=0)
-	time=models.DecimalField(max_digits=8, decimal_places=6,default=0)
+	time=models.DecimalField(max_digits=8, decimal_places=3,default=0)
 	memory=models.DecimalField(max_digits=6, decimal_places=1,default=0)
 	modified= models.DateTimeField(auto_now=True,auto_now_add=False)
 	created= models.DateTimeField(auto_now=False,auto_now_add=True)
