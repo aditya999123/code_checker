@@ -37,7 +37,7 @@ def problem_submissions(request,problem_code):
 	<td style="text-align: center;">%s</td>
 	<td style="text-align: center;">%s</td>
 	<td style="text-align: center;">%s</td>
-	<td style="text-align: center;"><button type="button" class="btn btn-success" onclick="window.open('/submission/%s'") %s>View</button>
+	<td style="text-align: center;"><button type="button" class="btn btn-success" onclick="window.open('/submission/%s')" %s>View</button>
 	</td></tr>"""
 	table=""
 	problem_row=problems.objects.get(problem_code=problem_code)
@@ -62,7 +62,7 @@ def user_submissions(request,username):
 		<td style="text-align: center;">%s</td>
 	<td style="text-align: center;">%s</td>
 	<td style="text-align: center;">%s</td>
-	<td style="text-align: center;"><button type="button" class="btn btn-success" onclick="window.open('/submission/%s'") %s>View</button>
+	<td style="text-align: center;"><button type="button" class="btn btn-success" onclick="window.open('/submission/%s')" %s>View</button>
 	</td></tr>"""
 	table=""
 	if(problem_code==None):
