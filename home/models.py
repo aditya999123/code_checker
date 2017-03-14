@@ -9,7 +9,7 @@ class KEYS_List(models.Model):
 	modified= models.DateTimeField(auto_now=True,auto_now_add=False)
 	created= models.DateTimeField(auto_now=False,auto_now_add=True)
 	def __unicode__(self):
-		return self.key
+		return str(self.key)
 
 class KEYS_internal(models.Model):
 	key=models.ForeignKey(KEYS_List)
