@@ -81,7 +81,7 @@ def register(request):
 			roll="12"
 
 		if(len(roll)!=8 or len(password)<6):
-			return render(request,'registration/register.html',{'error':"Check 1)IF Roll No is Valid <br> 2)Password must be a minimum of 6 characters long"})
+			return render(request,'registration/register.html',{'error':"Check<br>1)IF Roll No is Valid <br> 2)Password must be a minimum of 6 characters long"})
 		try:
 			user=user_data.objects.get(username=roll)
 			return render(request,'registration/register.html',{'error':"user already exsists"})
