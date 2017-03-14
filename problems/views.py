@@ -269,7 +269,7 @@ def submit_api(request,problem_code,code,lang):
 			if(response['run_status']['status']=='AC'):
 				print "a=",output_content
 				print "b=",response['run_status']['output']
-				if(output_content==response['run_status']['output']+"\n"):
+				if(output_content+"\n"==response['run_status']['output']):
 					print"here@87"
 					testcase_row.status='AC'
 					testcase_row.correct=True
