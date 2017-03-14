@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 from .models import *
 from django.contrib.auth.models import User
+
 def nav(request):
 	list1=""
 	list2=""

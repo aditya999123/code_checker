@@ -45,15 +45,15 @@ class problems(models.Model):
 
 	class Meta:
 		ordering = ('group','modified')
-
+	
 	def __unicode__(self):
 		return self.problem_code
 
 class testcase(models.Model):
 	problem_code=models.ForeignKey(problems,null=True)
-	input=models.TextField(max_length=12000,null=True,blank=True)
+	input=models.TextField(max_length=10000000,null=True,blank=True)
 	time_limit=models.IntegerField(validators=[validate_timelimit],default=1)
-	expected_output=models.TextField(max_length=12000,null=True,blank=True)
+	expected_output=models.TextField(max_length=10000000,null=True,blank=True)
 	score=models.IntegerField(null=False,blank=False,default=0)
 	modified= models.DateTimeField(auto_now=True,auto_now_add=False)
 	created= models.DateTimeField(auto_now=False,auto_now_add=True)
@@ -64,7 +64,7 @@ class testcase(models.Model):
 class submission(models.Model):
 	problem_code=models.ForeignKey(problems,null=True)
 	user=models.CharField(max_length=120,null=False,blank=False)
-	code=models.TextField(max_length=12000,null=True,blank=True)
+	code=models.TextField(max_length=10000000,null=True,blank=True)
 	score=models.IntegerField(null=False,blank=False,default=0)
 	time=models.DecimalField(max_digits=8, decimal_places=3,default=0)
 	memory=models.DecimalField(max_digits=6, decimal_places=1,default=0)

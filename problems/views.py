@@ -105,7 +105,7 @@ def show_testcases(request,submission_id):
 
 		json_nav['table']=table
 		json_nav['problem_code']=submission_row.problem_code
-		json_nav['code']=submission_row.code
+		json_nav['code']=str(submission_row.code)
 		return render(request,'section.html',json_nav)
 	if(flag==False):
 		json_nav['error']='Acess Denied'
@@ -198,7 +198,7 @@ def problem(request,problem_code):
 	json_nav=nav(request)
 	json_nav['title']=str(problem_row.title)
 	json_nav['problem_code']=str(problem_row.problem_code)
-	json_nav['question']=str(problem_row.question)
+	json_nav['question']=problem_row.question
 	json_nav['constraints']=str(problem_row.constraints)
 	json_nav['example']=str(problem_row.example)
 	
@@ -208,6 +208,7 @@ RUN_URL = "https://api.hackerearth.com/v3/code/run/"
 
 
 def runCode(problem_code,code,lang,input,time_limit):
+	print "\n\n\n\n",code,"\n\n\n"
 
 	run_data = {
 	'client_secret': '2e8285e5eb07253a012aad6d9823722b3548e249',
