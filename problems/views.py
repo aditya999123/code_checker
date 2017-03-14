@@ -209,7 +209,7 @@ RUN_URL = "https://api.hackerearth.com/v3/code/run/"
 
 def runCode(problem_code,code,lang,input,time_limit):
 	#print "\n\n\n\n",code,"\n\n\n"
-
+	#KEYS_List.objects.get(key='client_secret')
 	run_data = {
 	'client_secret': KEYS_internal.objects.get(key='client_secret').value,
 	'async': 0,
