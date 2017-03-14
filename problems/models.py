@@ -23,6 +23,10 @@ CHOICES = (
         ('CONTEST', 'CONTEST'),
         ('LAB', 'LAB'))
 
+def content_file_name(instance, filename):
+    return '/'.join(['content', "testcase", filename])
+
+
 class group(models.Model):
 	title=models.CharField(max_length=120,null=False,blank=False)
 	modified= models.DateTimeField(auto_now=True,auto_now_add=False)
@@ -51,9 +55,9 @@ class problems(models.Model):
 
 class testcase(models.Model):
 	problem_code=models.ForeignKey(problems,null=True)
-	input=models.TextField(max_length=10000000,null=True,blank=True)
+	input=models.FileField(upload_to=content_file_name)
 	time_limit=models.IntegerField(validators=[validate_timelimit],default=1)
-	expected_output=models.TextField(max_length=10000000,null=True,blank=True)
+	expected_output=models.FileField(upload_to=content_file_name)
 	score=models.IntegerField(null=False,blank=False,default=0)
 	modified= models.DateTimeField(auto_now=True,auto_now_add=False)
 	created= models.DateTimeField(auto_now=False,auto_now_add=True)

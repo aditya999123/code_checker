@@ -22,7 +22,7 @@ def check_access(request,submission_id):
 			flag=False
 		if(user_data.objects.get(username=str(request.user)).type=='ADMIN'):
 			flag=True
-	print "flag",flag
+	#print "flag",flag
 	return flag
 @login_required
 def problem_submissions(request,problem_code):
@@ -208,7 +208,7 @@ RUN_URL = "https://api.hackerearth.com/v3/code/run/"
 
 
 def runCode(problem_code,code,lang,input,time_limit):
-	print "\n\n\n\n",code,"\n\n\n"
+	#print "\n\n\n\n",code,"\n\n\n"
 
 	run_data = {
 	'client_secret': '2e8285e5eb07253a012aad6d9823722b3548e249',
@@ -228,7 +228,11 @@ def runCode(problem_code,code,lang,input,time_limit):
 	Make call to /run/ endpoint of HackerEarth API
 	and save code and result in database
 	"""
-	r = requests.post(RUN_URL, data=run_data,verify=False)
+	print"api called"
+	r = requests.post(RUN_URL, data=run_data,verify=False,timeout=100)
+	print "api returned"
+	print r,r.status_code
+	print"@233"
 	r = r.json()
 	print r
 	return r 
@@ -243,17 +247,29 @@ def submit_api(request,problem_code,code,lang):
 	flag=1
 	print"@75"
 	for o in testcase.objects.filter(problem_code=problem_row):
-		print"@76"
-		response=runCode(problem_code,code,lang,o.input,o.time_limit)
+		input_dir="media/"+str(o.input)
+		input_content=""
+		with open(input_dir, 'r') as content_file:
+			input_content = content_file.read()
+		print "input_content=",input_content
+		print "end"
+		output_dir="media/"+str(o.expected_output)
+		output_content=""
+		with open(output_dir, 'r') as content_file:
+			output_content = content_file.read()
+
+
+
+		response=runCode(problem_code,code,lang,input_content,o.time_limit)
 		print"@returned at 77"
 		testcase_row=testcase_submission.objects.create(submission_id=submission_row)
 		print response['compile_status']
 		if(response['compile_status']=='OK'):
 			print response['run_status']['status']
 			if(response['run_status']['status']=='AC'):
-				print "a=",o.expected_output
+				print "a=",output_content
 				print "b=",response['run_status']['output']
-				if(o.expected_output==response['run_status']['output'] or o.expected_output+'\n'==response['run_status']['output']):
+				if(output_content==response['run_status']['output']+"\n"):
 					print"here@87"
 					testcase_row.status='AC'
 					testcase_row.correct=True
