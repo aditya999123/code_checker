@@ -211,7 +211,7 @@ def runCode(problem_code,code,lang,input,time_limit):
 	#print "\n\n\n\n",code,"\n\n\n"
 
 	run_data = {
-	'client_secret': '2e8285e5eb07253a012aad6d9823722b3548e249',
+	'client_secret': KEYS_internal.objects.get(key='client_secret').value,
 	'async': 0,
 	'source': code,
 	'lang': lang,
